@@ -16,26 +16,33 @@ class NumberStringBuilder {
 	private final StringBuilder builder = new StringBuilder();
 
 	void buildNumber(int input) {
-		int thousandsDigits = input / 1000;
-		if (thousandsDigits > 0) {
-			buildNumber(thousandsDigits);
-			builder.append(" thousand");
-			buildRemainderIfNecessary(input % 1000);
+		int millionsDigits = input / 1000000;
+		if (millionsDigits > 0) {
+			buildNumber(millionsDigits);
+			builder.append(" million");
+			buildRemainderIfNecessary(input % 1000000);
 		} else {
-			int hundredsDigit = input / 100;
-			if (hundredsDigit > 0) {
-				builder.append(SINGLE_DIGITS[hundredsDigit]);
-				builder.append(" hundred");
-				buildRemainderIfNecessary(input % 100);
+			int thousandsDigits = input / 1000;
+			if (thousandsDigits > 0) {
+				buildNumber(thousandsDigits);
+				builder.append(" thousand");
+				buildRemainderIfNecessary(input % 1000);
 			} else {
-				int tensDigit = input / 10;
-				if (tensDigit == 0) {
-					builder.append(SINGLE_DIGITS[input]);
-				} else if (tensDigit == 1) {
-					builder.append(TEN_TO_NINETEEN[input - 10]);
+				int hundredsDigit = input / 100;
+				if (hundredsDigit > 0) {
+					builder.append(SINGLE_DIGITS[hundredsDigit]);
+					builder.append(" hundred");
+					buildRemainderIfNecessary(input % 100);
 				} else {
-					builder.append(TWENTY_TO_NINETY[tensDigit - 2]);
-					buildRemainderIfNecessary(input % 10, " ");
+					int tensDigit = input / 10;
+					if (tensDigit == 0) {
+						builder.append(SINGLE_DIGITS[input]);
+					} else if (tensDigit == 1) {
+						builder.append(TEN_TO_NINETEEN[input - 10]);
+					} else {
+						builder.append(TWENTY_TO_NINETY[tensDigit - 2]);
+						buildRemainderIfNecessary(input % 10, " ");
+					}
 				}
 			}
 		}
