@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<project name="numbers-in-english" default="run">
+	<property name="srcDir" value="src" />
+	<property name="testDir" value="test" />
+	<property name="buildDir" value="build" />
+	<property name="classDir" value="${buildDir}/classes" />
+	<property name="testClassDir" value="${buildDir}/test" />
+	<property name="mainClass" value="nie.NumbersInEnglish" />
+
+	<target name="run">
+		<java classname="${mainClass}" classpath="${classDir}">
+			<arg value="${input}" />
+		</java>
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${classDir}" />
+		<javac srcdir="${srcDir}" destdir="${classDir}" includeantruntime="no" />
+	</target>
+
+	<target name="test" depends="clean,compile-tests,run-tests" />
+
+	<target name="clean">
+		<delete dir="${buildDir}" />
+	</target>
+
+	<target name="compile-tests" depends="compile">
+		<mkdir dir="${testClassDir}" />
+		<javac srcdir="${testDir}" destdir="${testClassDir}" classpath="${classDir}" includeantruntime="yes" />
+	</target>
+
+	<target name="run-tests">
+		<junit>
+			<classpath>
+				<pathelement path="${classDir}" />
+				<pathelement path="${testClassDir}" />
+			</classpath>
+			<batchtest>
+				<formatter type="brief" usefile="false" />
+				<fileset dir="${testClassDir}" />
+			</batchtest>
+		</junit>
+	</target>
+</project>
