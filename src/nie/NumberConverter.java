@@ -2,9 +2,9 @@ package nie;
 
 public class NumberConverter {
 	public static String convertNumberToEnglish(String input) {
-		Integer inputAsInt = Integer.valueOf(input);
+		Long inputAsLong = Long.valueOf(input);
 		NumberStringBuilder builder = new NumberStringBuilder();
-		builder.buildNumber(inputAsInt);
+		builder.buildNumber(inputAsLong);
 		builder.makeFirstLetterUpperCase();
 		return builder.toString();
 	}

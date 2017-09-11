@@ -13,47 +13,59 @@ class NumberStringBuilder {
 		"twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"
 	};
 
+	private static final String[] POWERS_OF_THOUSAND = new String[] {
+		"thousand", "million", "billion", "trillion", "quadrillion", "quintillion"
+	};
+
+	private static final long MAX_POWER_OF_THOUSAND = (long) Math.pow(10, POWERS_OF_THOUSAND.length * 3);
+
 	private final StringBuilder builder = new StringBuilder();
 
-	void buildNumber(int input) {
-		int millionsDigits = input / 1000000;
-		if (millionsDigits > 0) {
-			buildNumber(millionsDigits);
-			builder.append(" million");
-			buildRemainderIfNecessary(input % 1000000);
+	void buildNumber(long input) {
+		long divisor = MAX_POWER_OF_THOUSAND;
+		int powersOfThousandIndex = POWERS_OF_THOUSAND.length - 1;
+		long topDigits = input / divisor;
+		while (topDigits == 0 && powersOfThousandIndex >= 0) {
+			divisor /= 1000;
+			topDigits = input / divisor;
+			powersOfThousandIndex--;
+		}
+
+		if (powersOfThousandIndex >= 0) {
+			buildNumber(topDigits);
+			builder.append(" ");
+			builder.append(POWERS_OF_THOUSAND[powersOfThousandIndex]);
+			buildRemainderIfNecessary(input % divisor);
 		} else {
-			int thousandsDigits = input / 1000;
-			if (thousandsDigits > 0) {
-				buildNumber(thousandsDigits);
-				builder.append(" thousand");
-				buildRemainderIfNecessary(input % 1000);
+			buildLastThreeDigits((int) input);
+		}
+	}
+
+	private void buildLastThreeDigits(int input) {
+		int hundredsDigit = input / 100;
+		if (hundredsDigit > 0) {
+			builder.append(SINGLE_DIGITS[hundredsDigit]);
+			builder.append(" hundred");
+			buildRemainderIfNecessary(input % 100);
+		} else {
+			int tensDigit = input / 10;
+			if (tensDigit == 0) {
+				builder.append(SINGLE_DIGITS[input]);
+			} else if (tensDigit == 1) {
+				builder.append(TEN_TO_NINETEEN[input - 10]);
 			} else {
-				int hundredsDigit = input / 100;
-				if (hundredsDigit > 0) {
-					builder.append(SINGLE_DIGITS[hundredsDigit]);
-					builder.append(" hundred");
-					buildRemainderIfNecessary(input % 100);
-				} else {
-					int tensDigit = input / 10;
-					if (tensDigit == 0) {
-						builder.append(SINGLE_DIGITS[input]);
-					} else if (tensDigit == 1) {
-						builder.append(TEN_TO_NINETEEN[input - 10]);
-					} else {
-						builder.append(TWENTY_TO_NINETY[tensDigit - 2]);
-						buildRemainderIfNecessary(input % 10, " ");
-					}
-				}
+				builder.append(TWENTY_TO_NINETY[tensDigit - 2]);
+				buildRemainderIfNecessary(input % 10, " ");
 			}
 		}
 	}
 
-	private void buildRemainderIfNecessary(int remainder) {
+	private void buildRemainderIfNecessary(long remainder) {
 		String separator = remainder < 100 ? " and " : " ";
 		buildRemainderIfNecessary(remainder, separator);
 	}
 
-	private void buildRemainderIfNecessary(int remainder, String separator) {
+	private void buildRemainderIfNecessary(long remainder, String separator) {
 		if (remainder > 0) {
 			builder.append(separator);
 			buildNumber(remainder);
