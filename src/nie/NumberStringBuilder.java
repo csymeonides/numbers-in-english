@@ -16,9 +16,9 @@ class NumberStringBuilder {
 	private final StringBuilder builder = new StringBuilder();
 
 	void buildNumber(int input) {
-		int thousandsDigit = input / 1000;
-		if (thousandsDigit > 0) {
-			builder.append(SINGLE_DIGITS[thousandsDigit]);
+		int thousandsDigits = input / 1000;
+		if (thousandsDigits > 0) {
+			buildNumber(thousandsDigits);
 			builder.append(" thousand");
 			buildRemainderIfNecessary(input % 1000);
 		} else {
