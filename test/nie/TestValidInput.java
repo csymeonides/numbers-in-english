@@ -85,6 +85,17 @@ public class TestValidInput {
 			{ "501000900", "Five hundred and one million nine hundred" },
 			{ "712501020", "Seven hundred and twelve million five hundred and one thousand and twenty" },
 			{ "999999999", "Nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "1000000000", "One billion" },
+			{ "12000049002", "Twelve billion fourty nine thousand and two" },
+			{ "508017032166", "Five hundred and eight billion seventeen million thirty two thousand one hundred and sixty six" },
+			{ "999999999999",
+				"Nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "999999999999999",
+				"Nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "999999999999999999",
+				"Nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "9223372036854775807", // Max long value
+				"Nine quintillion two hundred and twenty three quadrillion three hundred and seventy two trillion thirty six billion eight hundred and fifty four million seven hundred and seventy five thousand eight hundred and seven" },
 		});
 	}
 
