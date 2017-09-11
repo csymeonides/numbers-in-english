@@ -56,6 +56,18 @@ public class TestValidInput {
 			{ "2710", "Two thousand seven hundred and ten" },
 			{ "3880", "Three thousand eight hundred and eighty" },
 			{ "9999", "Nine thousand nine hundred and ninety nine" },
+			{ "10000", "Ten thousand" },
+			{ "11600", "Eleven thousand six hundred" },
+			{ "12925", "Twelve thousand nine hundred and twenty five" },
+			{ "28012", "Twenty eight thousand and twelve" },
+			{ "50003", "Fifty thousand and three" },
+			{ "100000", "One hundred thousand" },
+			{ "300004", "Three hundred thousand and four" },
+			{ "433111", "Four hundred and thirty three thousand one hundred and eleven" },
+			{ "500024", "Five hundred thousand and twenty four" },
+			{ "702000", "Seven hundred and two thousand" },
+			{ "873000", "Eight hundred and seventy three thousand" },
+			{ "900800", "Nine hundred thousand eight hundred" },
 		});
 	}
 
