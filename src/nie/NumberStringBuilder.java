@@ -22,6 +22,11 @@ class NumberStringBuilder {
 	private final StringBuilder builder = new StringBuilder();
 
 	void buildNumber(long input) {
+		if (input < 0) {
+			builder.append("minus ");
+			input = -input;
+		}
+
 		long divisor = MAX_POWER_OF_THOUSAND;
 		int powersOfThousandIndex = POWERS_OF_THOUSAND.length - 1;
 		long topDigits = input / divisor;
