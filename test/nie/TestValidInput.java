@@ -96,6 +96,17 @@ public class TestValidInput {
 				"Nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
 			{ "9223372036854775807", // Max long value
 				"Nine quintillion two hundred and twenty three quadrillion three hundred and seventy two trillion thirty six billion eight hundred and fifty four million seven hundred and seventy five thousand eight hundred and seven" },
+			{ "-1", "Minus one" },
+			{ "-63", "Minus sixty three" },
+			{ "-312", "Minus three hundred and twelve" },
+			{ "-76002", "Minus seventy six thousand and two" },
+			{ "-59101948", "Minus fifty nine million one hundred and one thousand nine hundred and fourty eight" },
+			{ "-234000000003", "Minus two hundred and thirty four billion and three" },
+			{ "-11006827032071", "Minus eleven trillion six billion eight hundred and twenty seven million thirty two thousand and seventy one" },
+			{ "-999999999999999999",
+				"Minus nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "-9223372036854775807", // Min long value
+				"Minus nine quintillion two hundred and twenty three quadrillion three hundred and seventy two trillion thirty six billion eight hundred and fifty four million seven hundred and seventy five thousand eight hundred and seven" },
 		});
 	}
 
