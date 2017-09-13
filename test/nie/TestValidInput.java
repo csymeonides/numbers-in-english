@@ -135,7 +135,7 @@ public class TestValidInput {
 
 	@Test
 	public void convertNumberToEnglishShouldReturnExpectedOutput() throws Exception {
-		String actualOutput = new NumberConverter(input).convertNumberToEnglish();
+		String actualOutput = NumberConverter.convertToEnglish(input);
 		assertEquals(expectedOutput, actualOutput);
 	}
 }

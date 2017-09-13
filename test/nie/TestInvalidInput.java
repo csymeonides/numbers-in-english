@@ -43,7 +43,7 @@ public class TestInvalidInput {
 	@Test
 	public void convertNumberToEnglishShouldThrowExpectedException() {
 		try {
-			new NumberConverter(input).convertNumberToEnglish();
+			NumberConverter.convertToEnglish(input);
 			fail("No exception was thrown");
 		} catch (NumbersInEnglishException e) {
 			assertEquals(expectedErrorMessage.toString(), e.getMessage());
