@@ -1,6 +1,6 @@
 package nie;
 
-class UnsignedNumberConverter {
+public class UnsignedNumberConverter {
 	private static final String[] SINGLE_DIGITS = new String[] {
 		"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
 	};
@@ -17,7 +17,7 @@ class UnsignedNumberConverter {
 		"thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion"
 	};
 
-	static final int MAX_DIGITS = (POWERS_OF_THOUSAND.length + 1) * 3;
+	public static final int MAX_DIGITS = (POWERS_OF_THOUSAND.length + 1) * 3;
 
 	private final StringBuilder builder = new StringBuilder();
 	private String digits;

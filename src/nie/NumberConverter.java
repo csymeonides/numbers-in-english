@@ -1,12 +1,14 @@
 package nie;
 
-import static nie.ErrorMessage.*;
+import static nie.errors.ErrorMessage.*;
+
+import nie.errors.NumbersInEnglishException;
 
 public class NumberConverter {
 	private static final String ZERO = "Zero";
 	private static final String MINUS = "Minus ";
 
-	public static String convertNumberToEnglish(String input) throws Exception {
+	public static String convertNumberToEnglish(String input) throws NumbersInEnglishException {
 		if (input == null || input.isEmpty()) {
 			throw new NumbersInEnglishException(NoInputProvided);
 		}

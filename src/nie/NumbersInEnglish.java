@@ -1,11 +1,13 @@
 package nie;
 
+import nie.errors.NumbersInEnglishException;
+
 public class NumbersInEnglish {
 	public static void main(String... args) {
 		try {
 			String numberInEnglish = NumberConverter.convertNumberToEnglish(args[0]);
 			System.out.println(numberInEnglish);
-		} catch (Exception e) {
+		} catch (NumbersInEnglishException e) {
 			System.err.println(e.getMessage());
 		}
 	}

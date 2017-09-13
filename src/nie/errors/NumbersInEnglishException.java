@@ -1,4 +1,4 @@
-package nie;
+package nie.errors;
 
 public class NumbersInEnglishException extends RuntimeException {
 	private static final long serialVersionUID = -5193607692450174003L;

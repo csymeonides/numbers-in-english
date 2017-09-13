@@ -1,6 +1,6 @@
 package nie;
 
-import static nie.ErrorMessage.*;
+import static nie.errors.ErrorMessage.*;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import nie.errors.ErrorMessage;
 
 @RunWith(Parameterized.class)
 public class TestInvalidInput {

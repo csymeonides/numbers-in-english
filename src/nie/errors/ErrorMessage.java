@@ -1,4 +1,6 @@
-package nie;
+package nie.errors;
+
+import nie.UnsignedNumberConverter;
 
 public enum ErrorMessage {
 	NoInputProvided("No input provided"),
