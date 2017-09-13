@@ -12,7 +12,7 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class NumberConverterTest {
+public class TestValidInput {
 	@Parameters(name = "{0} -> {1}")
 	public static Collection<Object[]> generateParameters() {
 		return Arrays.asList(new Object[][] {
@@ -133,7 +133,7 @@ public class NumberConverterTest {
 	public String expectedOutput;
 
 	@Test
-	public void eachInputShouldConvertToExpectedOutput() {
+	public void convertNumberToEnglishShouldReturnExpectedOutput() throws Exception {
 		String actualOutput = NumberConverter.convertNumberToEnglish(input);
 		assertEquals(expectedOutput, actualOutput);
 	}
