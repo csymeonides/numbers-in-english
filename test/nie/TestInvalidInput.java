@@ -13,6 +13,7 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 import nie.errors.ErrorMessage;
+import nie.errors.NumbersInEnglishException;
 
 @RunWith(Parameterized.class)
 public class TestInvalidInput {
@@ -42,9 +43,9 @@ public class TestInvalidInput {
 	@Test
 	public void convertNumberToEnglishShouldThrowExpectedException() {
 		try {
-			NumberConverter.convertNumberToEnglish(input);
+			new NumberConverter(input).convertNumberToEnglish();
 			fail("No exception was thrown");
-		} catch (Exception e) {
+		} catch (NumbersInEnglishException e) {
 			assertEquals(expectedErrorMessage.toString(), e.getMessage());
 		}
 	}

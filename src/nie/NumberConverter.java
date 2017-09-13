@@ -8,7 +8,27 @@ public class NumberConverter {
 	private static final String ZERO = "Zero";
 	private static final String MINUS = "Minus ";
 
-	public static String convertNumberToEnglish(String input) throws NumbersInEnglishException {
+	private String input;
+	private final StringBuilder output = new StringBuilder();
+
+	public NumberConverter(String input) {
+		this.input = input;
+	}
+
+	public String convertNumberToEnglish() throws NumbersInEnglishException {
+		validateInputAndHandleMinusSign();
+
+		if ("0".equals(input)) {
+			return ZERO;
+		} else {
+			UnsignedNumberConverter converter = new UnsignedNumberConverter(input, output);
+			converter.convertUnsignedNumber();
+			makeFirstLetterUpperCase();
+			return output.toString();
+		}
+	}
+
+	private void validateInputAndHandleMinusSign() {
 		if (input == null || input.isEmpty()) {
 			throw new NumbersInEnglishException(NoInputProvided);
 		}
@@ -17,27 +37,18 @@ public class NumberConverter {
 			throw new NumbersInEnglishException(NonIntegerInput);
 		}
 
-		if ("0".equals(input)) {
-			return ZERO;
-		} else {
-			boolean isNegativeNumber = input.charAt(0) == '-';
-			if (isNegativeNumber) {
-				input = input.substring(1);
-			}
-
-			if (input.length() > UnsignedNumberConverter.MAX_DIGITS) {
-				throw new NumbersInEnglishException(OutOfRange);
-			}
-
-			UnsignedNumberConverter converter = new UnsignedNumberConverter(input);
-			converter.convertUnsignedNumber();
-
-			if (isNegativeNumber) {
-				return MINUS + converter.getResult();
-			} else {
-				converter.makeFirstLetterUpperCase();
-				return converter.getResult();
-			}
+		if (input.charAt(0) == '-') {
+			input = input.substring(1);
+			output.append(MINUS);
 		}
+
+		if (input.length() > UnsignedNumberConverter.MAX_DIGITS) {
+			throw new NumbersInEnglishException(OutOfRange);
+		}
+	}
+
+	void makeFirstLetterUpperCase() {
+		char firstLetter = output.charAt(0);
+		output.setCharAt(0, Character.toUpperCase(firstLetter));
 	}
 }

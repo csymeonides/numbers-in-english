@@ -123,6 +123,7 @@ public class TestValidInput {
 				"Minus nine hundred and ninety nine octillion nine hundred and ninety nine septillion nine hundred and ninety nine sextillion nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
 			{ "-999999999999999999999999999999999",
 				"Minus nine hundred and ninety nine nonillion nine hundred and ninety nine octillion nine hundred and ninety nine septillion nine hundred and ninety nine sextillion nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "-0", "Zero" }
 		});
 	}
 
@@ -134,7 +135,7 @@ public class TestValidInput {
 
 	@Test
 	public void convertNumberToEnglishShouldReturnExpectedOutput() throws Exception {
-		String actualOutput = NumberConverter.convertNumberToEnglish(input);
+		String actualOutput = new NumberConverter(input).convertNumberToEnglish();
 		assertEquals(expectedOutput, actualOutput);
 	}
 }

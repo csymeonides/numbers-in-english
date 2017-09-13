@@ -19,13 +19,14 @@ public class UnsignedNumberConverter {
 
 	public static final int MAX_DIGITS = (POWERS_OF_THOUSAND.length + 1) * 3;
 
-	private final StringBuilder builder = new StringBuilder();
 	private String digits;
 	private String separator;
+	private final StringBuilder output;
 
-	UnsignedNumberConverter(String digits) {
+	UnsignedNumberConverter(String digits, StringBuilder output) {
 		this.digits = digits;
 		this.separator = "";
+		this.output = output;
 	}
 
 	void convertUnsignedNumber() {
@@ -44,23 +45,23 @@ public class UnsignedNumberConverter {
 
 	private void convertAtMostThreeDigits(int digits) {
 		if (digits != 0) {
-			builder.append(separator);
+			output.append(separator);
 			int hundredsDigit = digits / 100;
 			if (hundredsDigit > 0) {
-				builder.append(SINGLE_DIGITS[hundredsDigit - 1]);
-				builder.append(" hundred");
+				output.append(SINGLE_DIGITS[hundredsDigit - 1]);
+				output.append(" hundred");
 				separator = " and ";
 				convertAtMostThreeDigits(digits % 100);
 			} else {
 				int tensDigit = digits / 10;
 				if (tensDigit > 1) {
-					builder.append(TWENTY_TO_NINETY[tensDigit - 2]);
+					output.append(TWENTY_TO_NINETY[tensDigit - 2]);
 					separator = " ";
 					convertAtMostThreeDigits(digits % 10);
 				} else if (tensDigit == 1) {
-					builder.append(TEN_TO_NINETEEN[digits - 10]);
+					output.append(TEN_TO_NINETEEN[digits - 10]);
 				} else {
-					builder.append(SINGLE_DIGITS[digits - 1]);
+					output.append(SINGLE_DIGITS[digits - 1]);
 				}
 			}
 		}
@@ -68,8 +69,8 @@ public class UnsignedNumberConverter {
 
 	private void addPowerOfThousand(int numberOfDigits) {
 		int powersOfThousandIndex = ((numberOfDigits - 1) / 3) - 1;
-		builder.append(" ");
-		builder.append(POWERS_OF_THOUSAND[powersOfThousandIndex]);
+		output.append(" ");
+		output.append(POWERS_OF_THOUSAND[powersOfThousandIndex]);
 	}
 
 	private void convertRemainder(int offset) {
@@ -79,14 +80,5 @@ public class UnsignedNumberConverter {
 			separator = " and ";
 		}
 		convertUnsignedNumber();
-	}
-
-	void makeFirstLetterUpperCase() {
-		char firstLetter = builder.charAt(0);
-		builder.setCharAt(0, Character.toUpperCase(firstLetter));
-	}
-
-	String getResult() {
-		return builder.toString();
 	}
 }
