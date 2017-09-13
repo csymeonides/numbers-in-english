@@ -12,7 +12,7 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class TestValidInput {
+public class NumberConverterTest {
 	@Parameters(name = "{0} -> {1}")
 	public static Collection<Object[]> generateParameters() {
 		return Arrays.asList(new Object[][] {
@@ -94,8 +94,16 @@ public class TestValidInput {
 				"Nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
 			{ "999999999999999999",
 				"Nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
-			{ "9223372036854775807", // Max long value
-				"Nine quintillion two hundred and twenty three quadrillion three hundred and seventy two trillion thirty six billion eight hundred and fifty four million seven hundred and seventy five thousand eight hundred and seven" },
+			{ "999999999999999999999",
+				"Nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "999999999999999999999999",
+				"Nine hundred and ninety nine sextillion nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "999999999999999999999999999",
+				"Nine hundred and ninety nine septillion nine hundred and ninety nine sextillion nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "999999999999999999999999999999",
+				"Nine hundred and ninety nine octillion nine hundred and ninety nine septillion nine hundred and ninety nine sextillion nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "999999999999999999999999999999999",
+				"Nine hundred and ninety nine nonillion nine hundred and ninety nine octillion nine hundred and ninety nine septillion nine hundred and ninety nine sextillion nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
 			{ "-1", "Minus one" },
 			{ "-63", "Minus sixty three" },
 			{ "-312", "Minus three hundred and twelve" },
@@ -105,8 +113,16 @@ public class TestValidInput {
 			{ "-11006827032071", "Minus eleven trillion six billion eight hundred and twenty seven million thirty two thousand and seventy one" },
 			{ "-999999999999999999",
 				"Minus nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
-			{ "-9223372036854775807", // Min long value
-				"Minus nine quintillion two hundred and twenty three quadrillion three hundred and seventy two trillion thirty six billion eight hundred and fifty four million seven hundred and seventy five thousand eight hundred and seven" },
+			{ "-999999999999999999999",
+				"Minus nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "-999999999999999999999999",
+				"Minus nine hundred and ninety nine sextillion nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "-999999999999999999999999999",
+				"Minus nine hundred and ninety nine septillion nine hundred and ninety nine sextillion nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "-999999999999999999999999999999",
+				"Minus nine hundred and ninety nine octillion nine hundred and ninety nine septillion nine hundred and ninety nine sextillion nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
+			{ "-999999999999999999999999999999999",
+				"Minus nine hundred and ninety nine nonillion nine hundred and ninety nine octillion nine hundred and ninety nine septillion nine hundred and ninety nine sextillion nine hundred and ninety nine quintillion nine hundred and ninety nine quadrillion nine hundred and ninety nine trillion nine hundred and ninety nine billion nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine" },
 		});
 	}
 
@@ -117,7 +133,7 @@ public class TestValidInput {
 	public String expectedOutput;
 
 	@Test
-	public void test() {
+	public void eachInputShouldConvertToExpectedOutput() {
 		String actualOutput = NumberConverter.convertNumberToEnglish(input);
 		assertEquals(expectedOutput, actualOutput);
 	}
