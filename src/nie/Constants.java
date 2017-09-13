@@ -3,6 +3,7 @@ package nie;
 public class Constants {
 	public static final String ZERO = "Zero";
 	public static final String MINUS = "Minus ";
+	public static final String HUNDRED = "hundred";
 
 	public static final String[] SINGLE_DIGITS = new String[] {
 		"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"

@@ -29,8 +29,10 @@ class UnsignedNumberConverter {
 		return !input.isEmpty();
 	}
 
+	// Should return the digits from the next "thousands group" i.e. at most 3 digits
+	// Also changes the input string so that it "moves along" to the next thousands group
+	// Possible improvement: split the input string into "thousands groups" from the beginning and just iterate over them
 	private int getNextDigits() {
-		// TODO: either explain this bit, or split string into thousand groups
 		int numberOfNextDigits = ((input.length() - 1) % 3) + 1;
 		int nextDigits = Integer.valueOf(input.substring(0, numberOfNextDigits));
 		input = input.substring(numberOfNextDigits);
@@ -40,8 +42,7 @@ class UnsignedNumberConverter {
 	private void addPowerOfThousandIfNecessary() {
 		if (hasMoreDigits()) {
 			int powersOfThousandIndex = (input.length() - 1) / 3;
-			builder.setSeparator(SPACE);
-			builder.append(POWERS_OF_THOUSAND[powersOfThousandIndex]);
+			builder.appendWithSpace(POWERS_OF_THOUSAND[powersOfThousandIndex]);
 		}
 	}
 

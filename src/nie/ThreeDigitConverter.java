@@ -18,7 +18,8 @@ class ThreeDigitConverter {
 
 	private void convertHundredsDigit(int hundredsDigit) {
 		if (hundredsDigit != 0) {
-			builder.append(SINGLE_DIGITS[hundredsDigit - 1] + " hundred");
+			builder.append(SINGLE_DIGITS[hundredsDigit - 1]);
+			builder.appendWithSpace(HUNDRED);
 			builder.setSeparator(AND);
 		}
 	}

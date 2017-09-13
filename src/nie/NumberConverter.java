@@ -5,16 +5,18 @@ import static nie.errors.ErrorMessage.*;
 
 import nie.errors.NumbersInEnglishException;
 
-public class NumberConverter {
+class NumberConverter {
 	private String input;
 	private final NumberStringBuilder builder;
+
+	// TODO make these classes one-use (i.e. private constructor, static method)
 
 	public NumberConverter(String input) {
 		this.input = input;
 		this.builder = new NumberStringBuilder();
 	}
 
-	public String convertNumberToEnglish() throws NumbersInEnglishException {
+	String convertNumberToEnglish() throws NumbersInEnglishException {
 		validateInputAndHandleMinusSign();
 
 		if ("0".equals(input)) {

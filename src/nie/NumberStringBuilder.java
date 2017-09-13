@@ -11,6 +11,15 @@ class NumberStringBuilder {
 		builder.append(word);
 	}
 
+	void appendWithSpace(String word) {
+		setSeparator(SPACE);
+		append(word);
+	}
+
+	void setSeparator(Separator separator) {
+		this.separator = separator;
+	}
+
 	String getResult() {
 		makeFirstLetterUpperCase();
 		return builder.toString();
@@ -19,9 +28,5 @@ class NumberStringBuilder {
 	private void makeFirstLetterUpperCase() {
 		char firstLetter = builder.charAt(0);
 		builder.setCharAt(0, Character.toUpperCase(firstLetter));
-	}
-
-	void setSeparator(Separator separator) {
-		this.separator = separator;
 	}
 }
