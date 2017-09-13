@@ -1,12 +1,16 @@
 # numbers-in-english
-Takes an integer value, outputs its representation in English
+Takes an integer value, outputs its representation in English.
+
+Currently handles up to 33 digits, but can easily be extended.
 
 Sample input | Sample output
 ------------ | -------------
 0 | Zero
+-1 | Minus one
 13 | Thirteen
 85 | Eighty five
 5237 | Five thousand two hundred and thirty seven
+300000006 | Three hundred million and six
 
 ### Dependencies:
 
