@@ -1,12 +1,26 @@
 package nie;
 
-import static nie.ErrorMessage.*;
+import static nie.Constants.*;
+import static nie.errors.ErrorMessage.*;
 
-public class NumberConverter {
-	private static final String ZERO = "Zero";
-	private static final String MINUS = "Minus ";
+import nie.errors.NumbersInEnglishException;
 
-	public static String convertNumberToEnglish(String input) throws Exception {
+class NumberConverter {
+	static String convertToEnglish(String input) {
+		NumberConverter converter = new NumberConverter(input);
+		converter.validateInputAndHandleMinusSign();
+		return converter.getResult();
+	}
+
+	private String input;
+	private final NumberStringBuilder builder;
+
+	private NumberConverter(String input) {
+		this.input = input;
+		this.builder = new NumberStringBuilder();
+	}
+
+	private void validateInputAndHandleMinusSign() {
 		if (input == null || input.isEmpty()) {
 			throw new NumbersInEnglishException(NoInputProvided);
 		}
@@ -15,27 +29,22 @@ public class NumberConverter {
 			throw new NumbersInEnglishException(NonIntegerInput);
 		}
 
+		if (input.charAt(0) == '-') {
+			input = input.substring(1);
+			builder.append(MINUS);
+		}
+
+		if (input.length() > MAX_DIGITS) {
+			throw new NumbersInEnglishException(OutOfRange);
+		}
+	}
+
+	private String getResult() throws NumbersInEnglishException {
 		if ("0".equals(input)) {
 			return ZERO;
 		} else {
-			boolean isNegativeNumber = input.charAt(0) == '-';
-			if (isNegativeNumber) {
-				input = input.substring(1);
-			}
-
-			if (input.length() > UnsignedNumberConverter.MAX_DIGITS) {
-				throw new NumbersInEnglishException(OutOfRange);
-			}
-
-			UnsignedNumberConverter converter = new UnsignedNumberConverter(input);
-			converter.convertUnsignedNumber();
-
-			if (isNegativeNumber) {
-				return MINUS + converter.getResult();
-			} else {
-				converter.makeFirstLetterUpperCase();
-				return converter.getResult();
-			}
+			UnsignedNumberConverter.convertToEnglish(input, builder);
+			return builder.getResult();
 		}
 	}
 }

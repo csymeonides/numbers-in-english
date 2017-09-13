@@ -1,9 +1,11 @@
-package nie;
+package nie.errors;
+
+import nie.Constants;
 
 public enum ErrorMessage {
 	NoInputProvided("No input provided"),
 	NonIntegerInput("Input was not an integer"),
-	OutOfRange("Input is out of range - max number of digits is " + UnsignedNumberConverter.MAX_DIGITS);
+	OutOfRange("Input is out of range - max number of digits is " + Constants.MAX_DIGITS);
 
 	private final String message;
 

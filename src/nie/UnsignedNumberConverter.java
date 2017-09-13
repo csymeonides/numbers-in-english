@@ -1,92 +1,56 @@
 package nie;
 
+import static nie.Constants.*;
+import static nie.Separator.*;
+
 class UnsignedNumberConverter {
-	private static final String[] SINGLE_DIGITS = new String[] {
-		"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
-	};
-
-	private static final String[] TEN_TO_NINETEEN = new String[] {
-		"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
-	};
-
-	private static final String[] TWENTY_TO_NINETY = new String[] {
-		"twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"
-	};
-
-	private static final String[] POWERS_OF_THOUSAND = new String[] {
-		"thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion"
-	};
-
-	static final int MAX_DIGITS = (POWERS_OF_THOUSAND.length + 1) * 3;
-
-	private final StringBuilder builder = new StringBuilder();
-	private String digits;
-	private String separator;
-
-	UnsignedNumberConverter(String digits) {
-		this.digits = digits;
-		this.separator = "";
+	static void convertToEnglish(String input, NumberStringBuilder builder) {
+		UnsignedNumberConverter converter = new UnsignedNumberConverter(input, builder);
+		converter.convertToEnglish();
 	}
 
-	void convertUnsignedNumber() {
-		int numberOfDigits = digits.length();
-		int numberOfTopDigits = ((numberOfDigits - 1) % 3) + 1;
-		int topDigits = Integer.valueOf(digits.substring(0, numberOfTopDigits));
-		convertAtMostThreeDigits(topDigits);
+	private String input;
+	private final NumberStringBuilder builder;
 
-		if (numberOfDigits > 3) {
-			if (topDigits != 0) {
-				addPowerOfThousand(numberOfDigits);
+	private UnsignedNumberConverter(String input, NumberStringBuilder builder) {
+		this.input = input;
+		this.builder = builder;
+	}
+
+	private void convertToEnglish() {
+		while (hasMoreDigits()) {
+			int nextDigits = getNextDigitsAndShiftInput();
+			if (nextDigits != 0) {
+				ThreeDigitConverter.convertDigits(nextDigits, builder);
+				addPowerOfThousandIfNecessary();
 			}
-			convertRemainder(numberOfTopDigits);
-		}
-	}
-
-	private void convertAtMostThreeDigits(int digits) {
-		if (digits != 0) {
-			builder.append(separator);
-			int hundredsDigit = digits / 100;
-			if (hundredsDigit > 0) {
-				builder.append(SINGLE_DIGITS[hundredsDigit - 1]);
-				builder.append(" hundred");
-				separator = " and ";
-				convertAtMostThreeDigits(digits % 100);
-			} else {
-				int tensDigit = digits / 10;
-				if (tensDigit > 1) {
-					builder.append(TWENTY_TO_NINETY[tensDigit - 2]);
-					separator = " ";
-					convertAtMostThreeDigits(digits % 10);
-				} else if (tensDigit == 1) {
-					builder.append(TEN_TO_NINETEEN[digits - 10]);
-				} else {
-					builder.append(SINGLE_DIGITS[digits - 1]);
-				}
+			if (isFinalSetOfDigits()) {
+				builder.setSeparator(AND);
 			}
 		}
 	}
 
-	private void addPowerOfThousand(int numberOfDigits) {
-		int powersOfThousandIndex = ((numberOfDigits - 1) / 3) - 1;
-		builder.append(" ");
-		builder.append(POWERS_OF_THOUSAND[powersOfThousandIndex]);
+	private boolean hasMoreDigits() {
+		return !input.isEmpty();
 	}
 
-	private void convertRemainder(int offset) {
-		digits = digits.substring(offset);
-		separator = " ";
-		if (digits.length() <= 3 && Integer.valueOf(digits) < 100) {
-			separator = " and ";
+	// Should return the digits from the next "thousands group" i.e. at most 3 digits
+	// Possible improvement: split the input string into "thousands groups" from the beginning and iterate over them
+	private int getNextDigitsAndShiftInput() {
+		int numberOfNextDigits = ((input.length() - 1) % 3) + 1;
+		int nextDigits = Integer.valueOf(input.substring(0, numberOfNextDigits));
+		input = input.substring(numberOfNextDigits);
+		return nextDigits;
+	}
+
+	private void addPowerOfThousandIfNecessary() {
+		if (hasMoreDigits()) {
+			int powersOfThousandIndex = (input.length() - 1) / 3;
+			builder.appendWithSpace(POWERS_OF_THOUSAND[powersOfThousandIndex]);
 		}
-		convertUnsignedNumber();
 	}
 
-	void makeFirstLetterUpperCase() {
-		char firstLetter = builder.charAt(0);
-		builder.setCharAt(0, Character.toUpperCase(firstLetter));
-	}
-
-	String getResult() {
-		return builder.toString();
+	private boolean isFinalSetOfDigits() {
+		return input.length() == 3 && input.charAt(0) == '0';
 	}
 }
