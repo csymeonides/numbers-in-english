@@ -1,13 +1,11 @@
 package nie;
 
+import static nie.Constants.*;
 import static nie.errors.ErrorMessage.*;
 
 import nie.errors.NumbersInEnglishException;
 
 public class NumberConverter {
-	private static final String ZERO = "Zero";
-	private static final String MINUS = "Minus ";
-
 	private String input;
 	private final StringBuilder output = new StringBuilder();
 
@@ -42,7 +40,7 @@ public class NumberConverter {
 			output.append(MINUS);
 		}
 
-		if (input.length() > UnsignedNumberConverter.MAX_DIGITS) {
+		if (input.length() > MAX_DIGITS) {
 			throw new NumbersInEnglishException(OutOfRange);
 		}
 	}
