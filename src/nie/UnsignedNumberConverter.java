@@ -17,6 +17,8 @@ class UnsignedNumberConverter {
 		"thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion"
 	};
 
+	static final int MAX_DIGITS = (POWERS_OF_THOUSAND.length + 1) * 3;
+
 	private final StringBuilder builder = new StringBuilder();
 	private String digits;
 	private String separator;
@@ -84,7 +86,7 @@ class UnsignedNumberConverter {
 		builder.setCharAt(0, Character.toUpperCase(firstLetter));
 	}
 
-	public String getResult() {
+	String getResult() {
 		return builder.toString();
 	}
 }
