@@ -7,10 +7,11 @@ import nie.errors.NumbersInEnglishException;
 
 public class NumberConverter {
 	private String input;
-	private final StringBuilder output = new StringBuilder();
+	private final NumberStringBuilder builder;
 
 	public NumberConverter(String input) {
 		this.input = input;
+		this.builder = new NumberStringBuilder();
 	}
 
 	public String convertNumberToEnglish() throws NumbersInEnglishException {
@@ -19,10 +20,9 @@ public class NumberConverter {
 		if ("0".equals(input)) {
 			return ZERO;
 		} else {
-			UnsignedNumberConverter converter = new UnsignedNumberConverter(input, output);
+			UnsignedNumberConverter converter = new UnsignedNumberConverter(input, builder);
 			converter.convertUnsignedNumber();
-			makeFirstLetterUpperCase();
-			return output.toString();
+			return builder.getResult();
 		}
 	}
 
@@ -37,16 +37,11 @@ public class NumberConverter {
 
 		if (input.charAt(0) == '-') {
 			input = input.substring(1);
-			output.append(MINUS);
+			builder.append(MINUS);
 		}
 
 		if (input.length() > MAX_DIGITS) {
 			throw new NumbersInEnglishException(OutOfRange);
 		}
-	}
-
-	void makeFirstLetterUpperCase() {
-		char firstLetter = output.charAt(0);
-		output.setCharAt(0, Character.toUpperCase(firstLetter));
 	}
 }

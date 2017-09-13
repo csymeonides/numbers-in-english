@@ -1,29 +1,27 @@
 package nie;
 
 import static nie.Constants.*;
+import static nie.Separator.*;
 
 class UnsignedNumberConverter {
 	private String input;
-	private final StringBuilder output;
-	private String separator;
-	private int nextDigits;
+	private final NumberStringBuilder builder;
 
-	UnsignedNumberConverter(String input, StringBuilder output) {
+	UnsignedNumberConverter(String input, NumberStringBuilder builder) {
 		this.input = input;
-		this.output = output;
-		this.separator = "";
-		this.nextDigits = 0;
+		this.builder = builder;
 	}
 
 	void convertUnsignedNumber() {
 		while (hasMoreDigits()) {
-			setNextDigits();
+			int nextDigits = getNextDigits();
 			if (nextDigits != 0) {
-				convertHundredsDigit();
-				convertRemainingDigits();
-				addPowerOfThousand();
+				ThreeDigitConverter.convertDigits(nextDigits, builder);
+				addPowerOfThousandIfNecessary();
 			}
-			setFinalSeparator();
+			if (isFinalSetOfDigits()) {
+				builder.setSeparator(AND);
+			}
 		}
 	}
 
@@ -31,58 +29,23 @@ class UnsignedNumberConverter {
 		return !input.isEmpty();
 	}
 
-	private void setNextDigits() {
+	private int getNextDigits() {
+		// TODO: either explain this bit, or split string into thousand groups
 		int numberOfNextDigits = ((input.length() - 1) % 3) + 1;
-		nextDigits = Integer.valueOf(input.substring(0, numberOfNextDigits));
+		int nextDigits = Integer.valueOf(input.substring(0, numberOfNextDigits));
 		input = input.substring(numberOfNextDigits);
+		return nextDigits;
 	}
 
-	private void convertHundredsDigit() {
-		int hundredsDigit = nextDigits / 100;
-		if (hundredsDigit != 0) {
-			output.append(separator);
-			output.append(SINGLE_DIGITS[hundredsDigit - 1]);
-			output.append(" hundred");
-			separator = " and ";
-		}
-	}
-
-	private void convertRemainingDigits() {
-		int tensDigit = (nextDigits % 100) / 10;
-		if (tensDigit == 1) {
-			output.append(separator);
-			output.append(TEN_TO_NINETEEN[(nextDigits % 100) - 10]);
-		} else {
-			if (tensDigit > 1) {
-				output.append(separator);
-				output.append(TWENTY_TO_NINETY[tensDigit - 2]);
-				separator = " ";
-			}
-			convertSingleDigit();
-		}
-	}
-
-	private void convertSingleDigit() {
-		int singleDigit = nextDigits % 10;
-		if (singleDigit != 0) {
-			output.append(separator);
-			output.append(SINGLE_DIGITS[singleDigit - 1]);
-		}
-	}
-
-	private void addPowerOfThousand() {
+	private void addPowerOfThousandIfNecessary() {
 		if (hasMoreDigits()) {
 			int powersOfThousandIndex = (input.length() - 1) / 3;
-			output.append(" ");
-			output.append(POWERS_OF_THOUSAND[powersOfThousandIndex]);
+			builder.setSeparator(SPACE);
+			builder.append(POWERS_OF_THOUSAND[powersOfThousandIndex]);
 		}
 	}
 
-	private void setFinalSeparator() {
-		if (hasMoreDigits() && input.length() <= 3 && Integer.valueOf(input) < 100) {
-			separator = " and ";
-		} else {
-			separator = " ";
-		}
+	private boolean isFinalSetOfDigits() {
+		return input.length() == 3 && input.charAt(0) == '0';
 	}
 }
